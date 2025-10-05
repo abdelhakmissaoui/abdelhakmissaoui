@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pr. Abdelhak MISSAOUI | LPMR - Université Mohammed Premier</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #0a0118;
+      --secondary: #1a0a2e;
+      --accent: #00ffff;
+      --gold: #ff6b35;
+      --purple: #9d4edd;
+      --pink: #ff006e;
+      --blue: #00b4d8;
+      --text: #ffffff;
+      --text-dim: #b8b8d1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--primary);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    /* Animated Background */
+    .cosmic-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .cosmic-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(157, 78, 221, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 0, 110, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 40% 90%, rgba(0, 255, 255, 0.15) 0%, transparent 50%);
+      animation: cosmicMove 20s ease-in-out infinite;
+    }
+
+    @keyframes cosmicMove {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(50px, -50px) scale(1.1); }
+      66% { transform: translate(-30px, 30px) scale(0.9); }
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .nebula {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.4;
+      animation: nebulaFloat 15s ease-in-out infinite;
+    }
+
+    @keyframes nebulaFloat {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(100px, -100px); }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem 2rem;
+      background: rgba(10, 1, 24, 0.7);
+      backdrop-filter: blur(20px) saturate(180%);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(157, 78, 221, 0.3);
+    }
+
+    nav.scrolled {
+      padding: 1rem 2rem;
+      background: rgba(10, 1, 24, 0.95);
+      box-shadow: 0 10px 40px rgba(157, 78, 221, 0.3);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--purple), var(--pink), var(--accent));
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    nav a:hover {
+      color: var(--accent);
+      text-shadow: 0 0 20px var(--accent);
+    }
+
+    nav a:hover::before {
+      width: 100%;
+    }
+
+    /* Hero Header */
+    header {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-orb {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(157, 78, 221, 0.4) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      animation: orbPulse 8s ease-in-out infinite;
+      filter: blur(80px);
+      border-radius: 50%;
+    }
+
+    @keyframes orbPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+      50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.7; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-content h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #00f2fe 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      animation: gradientShift 5s ease infinite, textGlow 2s ease-in-out infinite alternate;
+      letter-spacing: 2px;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes textGlow {
+      from {
+        filter: drop-shadow(0 0 20px rgba(157, 78, 221, 0.6));
+      }
+      to {
+        filter: drop-shadow(0 0 40px rgba(255, 0, 110, 0.8));
+      }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+      animation: fadeInUp 1s ease-out 0.3s backwards;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .hero-affiliation {
+      font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+      color: var(--accent);
+      margin-bottom: 2rem;
+      animation: fadeInUp 1s ease-out 0.5s backwards;
+      line-height: 1.8;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      cursor: pointer;
+      z-index: 3;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-20px); }
+      60% { transform: translateX(-50%) translateY(-10px); }
+    }
+
+    .scroll-indicator svg {
+      width: 40px;
+      height: 40px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2;
+      filter: drop-shadow(0 0 10px var(--accent));
+    }
+
+    /* Sections */
+    section {
+      position: relative;
+      padding: 8rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      margin-bottom: 4rem;
+      text-align: center;
+      background: linear-gradient(135deg, var(--purple), var(--pink), var(--accent));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      animation: gradientShift 5s ease infinite;
+      letter-spacing: 2px;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 150px;
+      height: 5px;
+      background: linear-gradient(90deg, var(--purple), var(--pink), var(--accent));
+      margin: 1.5rem auto;
+      border-radius: 10px;
+      box-shadow: 0 0 20px var(--purple);
+    }
+
+    /* About Section */
+    .about-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    @media (max-width: 968px) {
+      .about-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .about-text {
+      background: rgba(26, 10, 46, 0.6);
+      padding: 3rem;
+      border-radius: 30px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      position: relative;
+      backdrop-filter: blur(10px);
+      transition: all 0.5s ease;
+    }
+
+    .about-text::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 30px;
+      padding: 2px;
+      background: linear-gradient(135deg, var(--purple), var(--pink), var(--accent));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0.5;
+      transition: opacity 0.5s ease;
+    }
+
+    .about-text:hover::before {
+      opacity: 1;
+    }
+
+    .about-text:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 80px rgba(157, 78, 221, 0.4);
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
+      line-height: 2;
+      margin-bottom: 1.5rem;
+      color: var(--text-dim);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, rgba(157, 78, 221, 0.2), rgba(255, 0, 110, 0.2));
+      border: 2px solid var(--purple);
+      border-radius: 50px;
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.4s ease;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      transition: left 0.4s ease;
+      z-index: -1;
+    }
+
+    .social-link:hover::before {
+      left: 0;
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(157, 78, 221, 0.5);
+      border-color: var(--pink);
+    }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .stat-card {
+      background: rgba(26, 10, 46, 0.6);
+      padding: 2.5rem;
+      border-radius: 25px;
+      border: 2px solid rgba(157, 78, 221, 0.3);
+      text-align: center;
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, var(--purple), transparent 30%);
+      animation: rotate 4s linear infinite;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .stat-card:hover::before {
+      opacity: 0.5;
+    }
+
+    @keyframes rotate {
+      100% { transform: rotate(360deg); }
+    }
+
+    .stat-card:hover {
+      transform: translateY(-15px) scale(1.05);
+      box-shadow: 0 30px 80px rgba(157, 78, 221, 0.5);
+      border-color: var(--accent);
+    }
+
+    .stat-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-number {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+
+    /* Publications */
+    .pub-filters {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 1rem 2rem;
+      background: rgba(26, 10, 46, 0.6);
+      border: 2px solid rgba(157, 78, 221, 0.4);
+      border-radius: 50px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.4s ease;
+      font-weight: 600;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .filter-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      transition: left 0.4s ease;
+      z-index: -1;
+    }
+
+    .filter-btn:hover::before, .filter-btn.active::before {
+      left: 0;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--pink);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(157, 78, 221, 0.5);
+    }
+
+    .publications-grid {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    .pub-card {
+      background: rgba(26, 10, 46, 0.6);
+      padding: 2.5rem;
+      border-radius: 25px;
+      border: 2px solid transparent;
+      backdrop-filter: blur(10px);
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pub-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(157, 78, 221, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .pub-card:hover::before {
+      left: 100%;
+    }
+
+    .pub-card:hover {
+      transform: translateX(15px);
+      box-shadow: 0 20px 60px rgba(157, 78, 221, 0.3);
+      border-color: var(--purple);
+    }
+
+    .pub-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .pub-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .pub-year, .pub-authors {
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pub-year {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .pub-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pub-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      background: linear-gradient(135deg, rgba(157, 78, 221, 0.2), rgba(255, 0, 110, 0.2));
+      border: 2px solid var(--purple);
+      border-radius: 50px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .pub-link:hover {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(157, 78, 221, 0.5);
+    }
+
+    /* Contact Section */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 968px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-info {
+      background: rgba(26, 10, 46, 0.6);
+      padding: 3rem;
+      border-radius: 30px;
+      border: 2px solid rgba(157, 78, 221, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      padding: 2rem;
+      background: rgba(157, 78, 221, 0.1);
+      border-radius: 20px;
+      transition: all 0.4s ease;
+      border: 1px solid transparent;
+    }
+
+    .contact-item:hover {
+      background: rgba(157, 78, 221, 0.2);
+      transform: translateX(10px);
+      border-color: var(--purple);
+    }
+
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.8rem;
+      box-shadow: 0 10px 30px rgba(157, 78, 221, 0.4);
+    }
+
+    .contact-details h3 {
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .contact-details p, .contact-details a {
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      line-height: 1.8;
+    }
+
+    .contact-details a:hover {
+      color: var(--accent);
+    }
+
+    .map-container {
+      background: rgba(26, 10, 46, 0.6);
+      padding: 3rem;
+      border-radius: 30px;
+      border: 2px solid rgba(157, 78, 221, 0.3);
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      backdrop-filter: blur(10px);
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(26, 10, 46, 0.6);
+      border-top: 2px solid rgba(157, 78, 221, 0.3);
+      color: var(--text-dim);
+      position: relative;
+    }
+
+    footer p {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Loading State */
+    .loading-spinner {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(157, 78, 221, 0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      text-align: center;
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 1.5rem;
+      }
+      
+      section {
+        padding: 4rem 1.5rem;
+      }
+
+      .hero-orb {
+        width: 400px;
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cosmic Background -->
+  <div class="cosmic-bg" id="cosmic-bg"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <ul>
+      <li><a href="#home">Accueil</a></li>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Header -->
+  <header id="home">
+    <div class="hero-orb"></div>
+    <div class="hero-content">
+      <h1>Pr. Abdelhak MISSAOUI</h1>
+      <p class="hero-subtitle">Enseignant-Chercheur en Physique</p>
+      <p class="hero-affiliation">
+        Laboratoire de Physique de la Matière et du Rayonnement (LPMR)<br>
+        Université Mohammed Premier, Oujda, Maroc
+      </p>
+    </div>
+    <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2 class="section-title">À propos</h2>
+    <div class="about-container">
+      <div class="about-text">
+        <p>
+          Pr. Abdelhak MISSAOUI est un enseignant-chercheur reconnu au sein du Laboratoire de Physique 
+          de la Matière et du Rayonnement (LPMR), rattaché au Département de Physique de la Faculté 
+          des Sciences de l'Université Mohammed Premier à Oujda.
+        </p>
+        <p>
+          Ses travaux de recherche portent principalement sur les plasmas, la physique des matériaux 
+          et leurs applications interdisciplinaires, contribuant ainsi à l'avancement des connaissances 
+          scientifiques dans ces domaines.
+        </p>
+        <div class="social-links">
+          <a href="https://orcid.org/0000-0002-5849-562X" target="_blank" class="social-link">
+            🔬 ORCID
+          </a>
+          <a href="https://www.scopus.com/authid/detail.uri?authorId=57218686840" target="_blank" class="social-link">
+            📚 Scopus
+          </a>
+          <a href="https://www.researchgate.net/profile/Abdelhak-Missaoui" target="_blank" class="social-link">
+            🔗 ResearchGate
+          </a>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-content">
+            <div class="stat-number" id="stat-pubs">0</div>
+            <div class="stat-label">Publications</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-content">
+            <div class="stat-number" id="stat-citations">0</div>
+            <div class="stat-label">Citations</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-content">
+            <div class="stat-number" id="stat-hindex">0</div>
+            <div class="stat-label">H-Index</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Publications Section -->
+  <section id="publications">
+    <h2 class="section-title">Publications Scientifiques</h2>
+    <div class="pub-filters">
+      <button class="filter-btn active" onclick="filterPublications('all')">Toutes</button>
+      <button class="filter-btn" onclick="filterPublications('2024')">2024</button>
+      <button class="filter-btn" onclick="filterPublications('2023')">2023</button>
+      <button class="filter-btn" onclick="filterPublications('2022')">2022</button>
+    </div>
+    <div id="publications-list">
+      <div style="text-align: center; padding: 3rem;">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Chargement des publications depuis Scopus...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div class="contact-details">
+            <h3>Email</h3>
+            <a href="mailto:amissaoui@ump.ac.ma">amissaoui@ump.ac.ma</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-details">
+            <h3>Adresse</h3>
+            <p>Faculté des Sciences<br>Université Mohammed Premier<br>Oujda, Maroc</p>
+          </div>
+        </div>
+        <div class
